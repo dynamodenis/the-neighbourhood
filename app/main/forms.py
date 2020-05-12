@@ -1,6 +1,3 @@
-from flask import render_template
-
-from . import main
 from flask_wtf import FlaskForm
 from wtforms import SubmitField, PasswordField, StringField, SelectField,TextAreaField
 from wtforms.validators import Required
