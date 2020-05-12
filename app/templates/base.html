@@ -1,0 +1,32 @@
+ 
+{% extends 'bootstrap/base.html' %}
+
+{% block styles%}
+{{ super() }}
+<link href='https://fonts.googleapis.com/css?family=Hanalei Fill' rel='stylesheet'>
+<link rel="stylesheet" href="{{ url_for('static', filename= 'css/index.css') }}">
+{% endblock %}
+
+
+<body>
+  {%block navbar%}
+  {%include 'navbar.html'%}
+  {%endblock%}
+
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+
+    {% if messages %}
+      {% for category, message in messages %}
+      <div class="{{ category }}">{{ message }}</div>
+      {% endfor %}
+  
+    {% endif %}
+  {% endwith %}
+
+  {% block content%}
+
+  {%endblock%}
+
+  <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+</body>
