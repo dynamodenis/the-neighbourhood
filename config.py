@@ -10,7 +10,7 @@ class DevConfig(Config):
     DEBUG=True
 
 class TestConfig(Config):
-    pass
+    SQLALCHEMY_DATABASE_URI='postgresql+psycopg2://dynamo:den28041997is@localhost/test_neighbourhood'
 
 config_options={
     'development':DevConfig,
