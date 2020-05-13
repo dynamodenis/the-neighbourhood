@@ -5,7 +5,6 @@ from wtforms.validators import Required
 class InForm(FlaskForm):
     speak_out = TextAreaField('Is it Happening: What?')
     title = StringField('Title')
-    category = SelectField(u'info category', choices=[('Covid', 'Covid'), ('Empowerment', 'Empowerment'), ('Community Gatherings', 'Community Gatherings'), ('Adventures', 'Adventures'), ('Our Youth', 'Our Youth'), ('Safety', 'Safety')])
     submit = SubmitField('Submit')
 
  
