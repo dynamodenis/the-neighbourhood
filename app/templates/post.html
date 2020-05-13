@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{%block title%}
+Create a post
+{%endblock%}
+
+{% block content %}
+<div class="container row">
+<div class="col-md-8">
+    <div class="" style="padding-left: 30%;">
+        <h1 style="padding-left: 10%;">New Post</h1>
+        {{wtf.quick_form(form)}}
+  
+        {{form.csrf_token}}
+`   </div>
+</div>
+{% endblock %}

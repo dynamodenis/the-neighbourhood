@@ -14,11 +14,11 @@ manager.add_command('db',MigrateCommand)
 def make_shell_context():
     return dict(app=app,db=db,User=User,Comment=Comment,Post=Post)
 
-@manager.command
-def test():
-    import unittest
-    test=unittest.TestLoader().discover('tests')
-    unittest.TextTestRunner(verbosity=2).run(test)
+# @manager.command
+# def test():
+#     import unittest
+#     test=unittest.TestLoader().discover('tests')
+#     unittest.TextTestRunner(verbosity=2).run(test)
 
 if __name__=="__main__":
     manager.run()

@@ -6,3 +6,26 @@ def index():
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.date.desc()).paginate(page=page, per_page=8)
     return render_template('index.html', posts=posts)
+
+@main.route('/<uname>/blog',methods = ['GET','POST'])
+@login_required
+def blog(uname):
+    user = User.query.filter_by(username = uname).first()
+    form = PostForm()
+
+    if not user.is_authenticated:
+        flash('please login', 'danger')
+        return redirect(url_for('auth.login'))
+   
+    if form.validate_on_submit():
+        title = form.title.data
+        post = form.post.data
+                
+        posts = Post(user_id=users.id, title=title, post=post)
+        db.session.add(posts)
+        db.session.commit()
+
+        flash('your Blog has been added successfuly!', 'success')
+        return redirect(url_for('main.index',uname=users.username))
+
+    return render_template('post.html', uname=user.username ,form =form)

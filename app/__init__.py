@@ -2,9 +2,9 @@ from flask import Flask
 from config import config_options
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_login import login_manager
 from flask_mail import Mail
 from sqlalchemy import create_engine
+from flask_bootstrap import Bootstrap
 
 
 
