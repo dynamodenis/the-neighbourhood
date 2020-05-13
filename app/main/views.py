@@ -29,3 +29,20 @@ def blog(uname):
         return redirect(url_for('main.index',uname=users.username))
 
     return render_template('post.html', uname=user.username ,form =form)
+
+
+# add this 
+@main.route('/post/<int:post_id>',methods = ['POST'])
+@login_required
+def delete(post_id):
+    posts = Post.query.filter_by(id=post_id).first()
+
+    if posts.user != current_user:
+        abort(403)
+    
+    db.session.delete(posts)
+    db.session.commit()
+
+    flash('your post has been deleted!', 'success')
+    
+    return redirect(url_for('main.index',post_id=posts.id))
