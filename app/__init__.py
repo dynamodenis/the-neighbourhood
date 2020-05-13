@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_login import login_manager
 from flask_mail import Mail
 from sqlalchemy import create_engine
+from flask_bootstrap import Bootstrap
 
 
 
@@ -15,6 +16,7 @@ login_manager.login_view = 'auth.login'
 db=SQLAlchemy()
 login_manager=LoginManager()
 mail = Mail()
+bootstrap=Bootstrap()
 
 
 def create_app(config_name):
@@ -26,6 +28,7 @@ def create_app(config_name):
     login_manager.init_app(app)
     mail.init_app(app)
     db.init_app(app)
+    bootstrap.init_app(app)
     
     #REGISTER BLUEPRINTS
     from .main import main as main_blueprint

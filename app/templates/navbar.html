@@ -10,16 +10,16 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-          <li><a href="/"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+          <li><a href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-home"></span>Home</a></li>
         <li><a href="#">About </a></li>
         <li><a href="#">Contact</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if current_user.is_authenticated %}
         <li><a href="{{url_for('main.profile',uname=current_user.username)}}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-        <li><a href="{{url_for('main.logout')}}"><span class="glyphicon glyphicon-user"></span> Sign out</a></li>
+        <li><a href="{{url_for('auth.logout')}}"><span class="glyphicon glyphicon-user"></span> Sign out</a></li>
         {% else %}
-        <li><a href="{{url_for('main.login')}}"><span class="glyphicon glyphicon-log-in"> </span>Sign in</a></li>
+        <li><a href="{{url_for('auth.login')}}"><span class="glyphicon glyphicon-log-in"> </span>Sign in</a></li>
         {%endif%}
       </ul>
     </div>

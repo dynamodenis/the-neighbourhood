@@ -39,6 +39,7 @@ time_zone=date_time.astimezone(pytz.timezone('Africa/Nairobi'))
 class Post(db.Model):
     __tablename__='posts'
     id=db.Column(db.Integer,primary_key=True)
+    title=db.Column(db.String)
     post=db.Column(db.String,nullable=False)
     picture=db.Column(db.String)
     posted_date=db.Column(db.DateTime,default=time_zone)

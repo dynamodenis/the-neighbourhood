@@ -45,9 +45,9 @@ HOME
         <div class="row">
             {% for item in posts.items %}
                 <div class="card col-md-5" style="border: 1px solid white;background-color: white; padding: 10px;margin: 2%;">
-                    <div class="card-footer" style="background-color: #E1BEE7;"><img src="{{url_for('static',filename=user.profile_pic_path)}}" class="img-thumbnail img-circle img-respons img-thumbnail" style="width: 80px; height: 80px;">  <a href="{{url_for('main.profile',uname=user.username)}}" >{{posted_by.username| capitalize}}</a> Posted: {{item.date | timeago }}</div>
-                    <div class="card-header" style="background-color: #E1BEE7;">Topic: {{ item.topic}}</div>
-                    <div class="card-body" style="background-color: #FBE9E7;"  >{{ item.description}}</div>
+                    <div class="card-footer" style="background-color: #E1BEE7;"><img src="{{url_for('static',filename=user.profile_pic_path)}}" class="img-thumbnail img-circle img-respons img-thumbnail" style="width: 80px; height: 80px;">  <a href="{{url_for('main.profile',uname=user.username)}}" >{{posted_by.username| capitalize}} </a> Posted: {{item.date | timeago }}</div>
+                    <div class="card-header" style="background-color: #E1BEE7;">Topic: {{ item.title}}</div>
+                    <div class="card-body" style="background-color: #FBE9E7;"  >{{ item.post}}</div>
                     <div class="card-footer" style="background-color: #E1BEE7;"><a class="btn" style="color:white; font-size: large;" href="{{url_for('main.comment', pname = item.id)}}"><strong>Comment</strong></a></div>
                 </div>       
             {% endfor %}
