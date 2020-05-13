@@ -47,3 +47,23 @@ def new_comment(post_id):
     return render_template('new_comment.html',title=title,comment_form = form,post_id=post_id)
 
 
+@main.route('/update/post/<int:post_id>', methods=['GET','POST'])
+@login_required
+def update_post(post_id):
+    update=PostForm()
+    post=Post.query.filter_by(id=post_id).first_or_404()
+    if post.user !=current_user:
+        abort(403)
+
+    if update.validate_on_submit():
+        post.category=update.category.data
+        post.post=update.post.data
+        db.session.commit()
+        return redirect(url_for('main.profile',user=post.user.username))
+        flash('Post updated!')
+
+    elif request.method=='GET':
+        update.category.data=post.category
+        update.post.data=post.post
+        
+    return render_template('update_profile.html',update=update,legend='Update post',title='Update post')
