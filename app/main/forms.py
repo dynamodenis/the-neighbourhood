@@ -19,8 +19,10 @@ class UpdateProfile(FlaskForm):
     bio = TextAreaField('What is interesting about you', validators=[Required()])
     username=StringField('Type Your Username:')
     email=StringField('Enter Your Email Address:', validators=[Email()])
+    contact=StringField('Type your contacts...', validators=[])
+    address=StringField('Enter Your Address:', validators=[])
     picture=FileField('Choose a Profile Picture:', validators=[FileAllowed(['jpeg','jpg','png'])])
-    submit=SubmitField('Create Account')
+    submit=SubmitField('Update')
 
     def validate_username(self,data):
         if data.data != current_user.username:
