@@ -1,0 +1,12 @@
+body{
+    background-color:white;
+}
+.comment{
+    padding-top: 20px;
+}
+.index_title{
+    font-weight: bolder;
+}
+.name{
+    text-decoration: none;
+}

@@ -1,0 +1,73 @@
+
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block styles%}
+    {{super()}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock%}
+{% block content%}
+<div class="row">
+    <div class="col-md-1 col-lg-1 col-xs-1"></div>
+    <div class="col-md-10 col-lg-10 col-xs-10">
+        <div class="card mb-6">
+            <div class="card-body" style="margin-top: 20px;">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                    {% if post.user.profile_pic_path %}
+                    <img src="{{image}}" class=" img-circle img-responsive " style="width: 45px; height: 45px;">
+                    {%else%}
+                    <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle" alt="" style="width: 45px; height: 45px;">
+                    {% endif %}
+                </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                    <div class="card-title">
+                      <div class="card-title" style="font-weight: bolder;"><a href="{{url_for('main.post_profile', user=post.user.username)}}" style="text-decoration: none;">{{post.user.username}} </a> Posted: {{post.posted_date | timeago }}</div>
+                    </div>
+                    <p class="card-text">{{post.post}}</p>
+                    {% if post.picture%}
+                        <div><img src="{{url_for('static',filename='/images/'+post.picture)}}" alt="" class="img-thumbnail img-responsive img-thumbnail"></div>
+                    {% endif%}                
+                    <p style="margin-top: 10px;">
+                        <class class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="link" aria-expanded="false" aria-controls="collapseExample">
+                        Comment 
+                        </class>
+                    </p>
+                    <div class="collapse" id="collapseExample">
+                        <div class="card card-body form-inline">
+                            {{wtf.quick_form(form)}}
+                        </div>
+                    </div> 
+                    <div class=" card comments">
+                        <h4 class="card-header">View all post comments</h4>
+                        <ul>
+                            {% for comment in comments%}
+                            <li style="list-style-type: none;">
+                                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
+                                    {% if comment.user.profile_pic_path %}
+                                    <img src="{{image}}" class="img-circle " style="width: 20px; height: 20px;">
+                                    {%else%}
+                                    <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle" alt="" style="width: 25px; height: 25px;">
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-8 col-lg-8 col-sm-8 col-xs-6">
+                                        <span class="header">{{comment.user.username}}</span> <br>
+                                        <span class="rounded">{{comment.comment}} </span><hr>                          
+                                </div>
+                                <br>
+                                <!-- {% if post.user==current_user%}
+                                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-4">
+                                </div>
+                                {% endif %} -->
+                            </li>
+                            <br>
+                            {% endfor%}
+                        </ul>
+                    </div>   
+                </div>   
+            </div>     
+        </div>
+    </div>
+    <div class="col-md-1 col-lg-1 col-xs-1"></div>
+</div>
+{% endblock %}

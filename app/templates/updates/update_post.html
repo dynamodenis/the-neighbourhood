@@ -1,0 +1,22 @@
+{% import 'bootstrap/wtf.html' as wtf %}
+{% extends 'base.html'%}
+{% block styles%}
+    {{super()}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/index.css')}}">
+{% endblock%}
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 col-lg-3"></div>
+        <div class="col-md-8 col-sm-12 col-lg-6">
+            <legend class="border-bottom mb-4">{{legend}}</legend>
+        <!-- Flash message -->
+            {{wtf.quick_form(update)}}
+        </div>
+
+        <div class="col-md-2 col-lg-3"></div>  
+    </div>
+</div>
+
+{% endblock%}

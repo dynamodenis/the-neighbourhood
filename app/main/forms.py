@@ -6,19 +6,22 @@ from ..models import User
 from flask_login import current_user
 
 class PostForm(FlaskForm):
-    post = TextAreaField('Is it Happening: What?')
-    title = StringField('Title')
-    submit = SubmitField('Submit')
+    title = StringField('Title:')
+    post = TextAreaField('Create a Post:')
+    picture=FileField('Upload Image::', validators=[FileAllowed(['jpeg','jpg','png'])])
+    submit = SubmitField('Post')
 
  
 class Commentform(FlaskForm):
-    comment = TextAreaField('Comment')
+    comment = TextAreaField('Comment:')
     submit = SubmitField('Post Comment')
 
 class UpdateProfile(FlaskForm):
-    bio = TextAreaField('What is interesting about you', validators=[Required()])
-    username=StringField('Type Your Username:')
-    email=StringField('Enter Your Email Address:', validators=[Email()])
+    username=StringField('Update Your Username:')
+    email=StringField('Update Your Email Address:', validators=[Email()])
+    bio = TextAreaField('Bio:', validators=[Required()])
+    contact=StringField('Your Contact:')
+    address=StringField('Location/Address:')
     picture=FileField('Choose a Profile Picture:', validators=[FileAllowed(['jpeg','jpg','png'])])
     submit=SubmitField('Create Account')
 

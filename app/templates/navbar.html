@@ -1,5 +1,5 @@
 <nav class="navbar navbar-inverse" style="margin: 0;">
-  <div class="container-fluid">
+  <div class="container-fluid position-fixed">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
@@ -10,13 +10,13 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-          <li><a href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-home"></span>Home</a></li>
-        <li><a href="#">About </a></li>
-        <li><a href="#">Contact</a></li>
+          <li {% if pages=='index'%} class="active" {%endif%}><a href="{{url_for('main.index')}}"><span class="glyphicon glyphicon-home"></span>Home</a></li>
+        <li {% if pages=='about'%} class="active" {%endif%}><a href="{{url_for('main.about')}}">About </a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         {% if current_user.is_authenticated %}
-        <li><a href="{{url_for('main.profile',uname=current_user.username)}}"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+        <li {% if pages=='post'%} class="active" {%endif%}><a href="{{url_for('main.post', uname=current_user.username)}}">Create Post</a></li>
+        <li {% if pages=='profile'%} class="active" {%endif%}><a href="{{url_for('main.profile',user=current_user.username)}}"><span><img src="{{url_for('static',filename='/profile/'+current_user.profile_pic_path)}}" style="width: 25px; height: 25px;" class="img-circle"></span>{{current_user.username}}</a></li>
         <li><a href="{{url_for('auth.logout')}}"><span class="glyphicon glyphicon-user"></span> Sign out</a></li>
         {% else %}
         <li><a href="{{url_for('auth.login')}}"><span class="glyphicon glyphicon-log-in"> </span>Sign in</a></li>

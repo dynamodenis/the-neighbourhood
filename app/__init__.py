@@ -6,6 +6,7 @@ from flask_login import login_manager
 from flask_mail import Mail
 from sqlalchemy import create_engine
 from flask_bootstrap import Bootstrap
+import arrow
 
 
 
@@ -40,6 +41,13 @@ def create_app(config_name):
 
     #REGISTER CONFIGURASTION
     app.config.from_object(config_options[config_name])
+
+    def format_date(value):
+        dt = arrow.get(value).to('UTC')
+        return arrow.get(value).humanize()
+
+
+    app.jinja_env.filters['timeago'] = format_date
 
 
     return app

@@ -1,0 +1,6 @@
+.main{
+    background-image: url(".images/about.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+}

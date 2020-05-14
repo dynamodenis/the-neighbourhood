@@ -1,0 +1,76 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf %}
+{%block title%}
+User Profile
+{%endblock%}
+{% block styles%}
+    {{super()}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/profile.css')}}">
+{% endblock%}
+{% block content %}
+<div class="row">
+    <div class="col-md-2 col-lg-3"></div>
+    <div class="col-md-8 col-lg-6 col-sm-10">
+        <div class="card  mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+                <div></div>
+                <div class="col-md-6 col-lg-6 col-sm-4  col-xs-4" style="margin-top: 10px;" >
+                    {% if user.profile_pic_path %}
+                    <img src="{{image}}" class="img-circle img-responsive"  style="width: 250px; height: 250px;">
+                    {%else%}
+                    <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle" alt="" style="width: auto; height: auto;" class="img-responsive">
+                    {% endif %}
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-8 col-xs-8">
+                    <div class="card-body">
+                    <h3 class="card-title">{{user.username}}</h3>
+                    <hr style="border-width: 2px;">
+                    <p class="card-text">Email Adress: {{user.email}}</p>
+                    <p class="card-text">Contact Info: {{user.contact}}</p>
+                    <p class="card-text">Location/Address: {{user.address}}</p>
+                    <p class="card-text">About Me: <span>{{user.bio}}</span></p> 
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 col-lg-3"></div>
+</div>
+<div class="row">
+    <div class="col-md-2 col-lg-2 col-xs-1"></div>
+    <div class="col-md-8 col-lg-8 col-xs-10 ">
+        <legend style="text-align: center;">Total Posts {{posts.total}}</legend>
+        <ul class="list-index ">
+            {% for post in posts.items%}
+            <li class="border border-rounded " style="padding-left:40px ; list-style-type: none;">                 
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title"> <span class="label label-default">Topic: {{post.title}}</span> <span></span><span class="label label-success"><span style="font-weight: bolder;">{{post.user.username}}</span></span></h4>
+                        <p class="card-text">{{post.post}}</p>
+                    </div>
+                    <a href="{{url_for('main.comment',post_id=post.id)}}"><button class="btn btn-secondary">Comment</button></a>
+                </div>              
+            </li><hr>
+            {%endfor%}
+        </ul>
+        <div class="text-center">
+            {% for page in posts.iter_pages(left_edge=2,right_edge=2,left_current=2,right_current=2)%}
+                {% if page %}
+                    {% if posts.page==page%}
+                    <a class="btn btn-primary " href="{{url_for('main.posted',page=page,username=user.username)}}">{{ page }}</a>
+                    {% else %}
+                    <a class="btn btn-outline-secondary" href="{{url_for('main.posted',page=page,username=user.username)}}">{{ page }}</a>
+                    {% endif%}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor%}
+        </div>
+    </div>
+    <div class="col-md-2 col-lg-2 col-xs-1"></div>
+</div>
+
+<!-- ----------------------------------------------------------------- -->
+{% endblock %}

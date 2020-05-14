@@ -1,0 +1,54 @@
+
+{%extends 'base.html'%}
+{% set active_page='about'%}
+
+{%block title%}
+About Us
+{%endblock%}
+{% block styles%}
+  {{ super() }}
+  <link href='https://fonts.googleapis.com/css?family=Hanalei Fill' rel='stylesheet'>
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/about.css') }}">
+{% endblock %}
+
+{%block content%}
+
+<body class="container-fluid" style="background-image: url(./static/images/about.jpeg); background-repeat: no-repeat; background-size: cover; height: 100%;">
+     
+    <div class="row">
+        <div class="col-lg-4  col-md-4 ">
+            <div class="card" style="width: 40rem; font-size: 1.2em; opacity: 80%;">
+                <div class="card-header" style="font-size: 1.5em;">
+                  Contact Us
+                </div>
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">Email: www.digital@neighbourhood.com</li>
+                  <li class="list-group-item">Tel No.: 0758818394</li>
+                  <li class="list-group-item">Address: 43018-00100 Nairobi,Kenya</li>
+                  <li class="list-group-item">Location: Prism Building,10th floor,Nairobi.</li>
+                </ul>
+              </div>
+        </div>
+        <div class="col-lg-8 col-md-8 col-sm-12" style="font-size: 1.5em; background-color: beige; border-radius: 40px; opacity: 70%; margin-top: 10px;">
+            <h2 style="text-align: center;">About Us</h2>   
+            <p >My neighborhood is a neighborhood hub for trusted connections and the exchange of helpful information, goods, and services. We believe that by bringing neighbors together, we can cultivate a kinder world where everyone has a neighborhood they can rely on.
+
+                Building connections in the real world is a universal human need. That truth, and the reality that neighborhoods are one of the most important and useful communities in our lives, have been a guiding principle for My neighborhood since the beginning.</p>
+            <ul>
+                <li>Build a stronger neighbourhood, Connect with your neighbours to stay informed and share useful local information.</li>
+                <li>Spread the word about a lost dog</li>
+                <li>Recommend and discover favorite local businesses</li>
+                <li>Recommend for a job opportunity</li>
+                <li>Community communication</li>
+                <li>Receive important safety information from local agencies</li>
+                <li>Get to know your neighborhood</li>
+            
+            </ul>
+            <p>Neighborhood is free, and it’s easy to <a href="{{url_for('auth.register')}}" class="label label-info">Sign up</a></p>
+        </div>
+        
+    </div>
+     
+   
+</body>
+{% endblock%}

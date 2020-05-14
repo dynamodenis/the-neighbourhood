@@ -1,0 +1,87 @@
+{% extends 'base.html'%}
+{% set active_page='profile' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block styles%}
+    {{super()}}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/profile.css')}}">
+{% endblock%}
+{% block content%}
+<div class="row">
+    <div class="col-md-2 col-lg-3"></div>
+    <div class="col-md-8 col-lg-6 col-sm-10">
+        <div class="card  mb-3" style="max-width: 540px;">
+            <div class="row no-gutters">
+                <div class="col-md-6 col-lg-6 col-sm-4  col-xs-4 m-3" ><hr>
+                    {% if user.profile_pic_path %}
+                    <img src="{{image}}" class="img-circle" alt="..." style="width: 220px; height: 220px;">
+                    {%else%}
+                    <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle" alt="" style="width: auto; height: auto;" class="img-responsive">
+                    {% endif %}
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-8 col-xs-8">
+                    <div class="card-body">
+                    <h3 class="card-title">{{user.username| capitalize}}</h3>
+                    <hr style="border-width: 2px;">
+                    <p class="card-text">Email Adress: {{user.email}}</p>
+                    {% if user.address%}
+                    <p class="card-text">Location Address: {{user.address}}</p>
+                    {%endif%}
+                    {% if user.contact%}
+                    <p class="card-text">Contact Info: {{user.contact}}</p>
+                    {%endif%}
+                    <p class="card-text">About Me: <span>{{user.bio}}</span></p> 
+     
+                    <a href="{{url_for('main.update_profile',uname=user.username)}}" class="btn btn-success"><small>Update Settings</small></a><hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2 col-lg-3"></div>
+</div>
+<div class="row">
+    <div class="col-md-2 col-lg-2 col-sm-0"></div>
+    <div class="col-md-8 col-sm-12 col-lg-8">
+        <ul class="list-group">
+            {% for post in posts.items%}
+                <li class="list-group-item">
+                    <div class="card w-75">
+                        <div class="card-body">
+                          <h4 class="card-title"><span class="badge badge-default">Date Posted: <span class="badge badge-light">{{post.posted_date.strftime('%Y-%m-%d')}}</span></span></span></h4>
+                          <p class="card-text">{{post.post}}</p>
+                          {% if post.user==current_user%}
+                          <div>
+                            <a href="{{url_for('main.update_post',post_id=post.id)}}" class="btn btn-primary btn-sm">Update</a>
+                            <button type="button" class="btn btn-danger btn-sm m-2" data-toggle="modal" data-target="#deleteModal" href="">Delete</button>
+                          </div>
+                          {%endif%}                          
+                        </div>
+                      </div>
+                </li>
+
+                <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="deleteModalLabel">Delete this blog?</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-footer ">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <form action="{{url_for('main.delete',post_id=post.id)}}" method="POST">
+                              <input class="btn btn-danger" type="submit" value="Delete">
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            {% endfor%}
+        </ul>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-0"></div>
+</div>
+{% endblock%}

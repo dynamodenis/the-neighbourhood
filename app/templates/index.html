@@ -1,12 +1,17 @@
 {%extends 'base.html'%}
 
 {%block title%}
-HOME
+Digital Neighbourhood
 {%endblock%}
+{% block styles%}
+  {{ super() }}
+  <link href='https://fonts.googleapis.com/css?family=Hanalei Fill' rel='stylesheet'>
+  <link rel="stylesheet" href="{{ url_for('static', filename= 'css/styles.css') }}">
+{% endblock %}
 
 {%block content%}
 
-<body class="container-fluid" style="font-size: large; background-color: #D5D8DC;">
+<body class="container-fluid">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -18,7 +23,7 @@ HOME
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-              <img  style="height: 350px; width: 100%" src="../static/images/676792.png" alt="unable to load image">
+              <img  style="height: 350px; width: 100%" src="../static/images/676792.png" alt="Welcome to Digital Neighbourhood">
             </div>
         
             <div class="item">
@@ -43,15 +48,35 @@ HOME
     <div class="container" style="padding-top: 18px;">
 
         <div class="row">
+          <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
+          <div class="col-lg-8 col-md-8 col-sm-10 col-xs-10">
             {% for item in posts.items %}
-                <div class="card col-md-5" style="border: 1px solid white;background-color: white; padding: 10px;margin: 2%;">
-                    <div class="card-footer" style="background-color: #E1BEE7;"><img src="{{url_for('static',filename=user.profile_pic_path)}}" class="img-thumbnail img-circle img-respons img-thumbnail" style="width: 80px; height: 80px;">  <a href="{{url_for('main.profile',uname=user.username)}}" >{{posted_by.username| capitalize}} </a> Posted: {{item.date | timeago }}</div>
-                    <div class="card-header" style="background-color: #E1BEE7;">Topic: {{ item.title}}</div>
-                    <div class="card-body" style="background-color: #FBE9E7;"  >{{ item.post}}</div>
-                    <div class="card-footer" style="background-color: #E1BEE7;"><a class="btn" style="color:white; font-size: large;" href="{{url_for('main.comment', pname = item.id)}}"><strong>Comment</strong></a></div>
-                </div>       
-            {% endfor %}
+            <div class="card">
+              <div class="card-body">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 "  style="margin-left: 20px;">
+                  {% if item.user.profile_pic_path %}
+                  <img src="{{url_for('static',filename='/profile/'+item.user.profile_pic_path)}}" class=" img-circle img-responsive " style="width: 45px; height: 45px;">
+                  {%else%}
+                  <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle" alt="" style="width: 45px; height: 45px;">
+                  {% endif %}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 card-body " style="margin-right: 100px;">
+                  <div class="card-title">
+                    <div class="card-title" style="font-weight: bolder;"><a href="{{url_for('main.post_profile', user=item.user.username)}}" style="text-decoration: none;">{{item.user.username}} </a> Posted: {{item.posted_date | timeago }}</div>
+                  </div>
+                  <p class="card-text">{{item.post}}</p>
+                  {% if item.picture%}
+                      <div><img src="{{url_for('static',filename='/images/'+item.picture)}}" alt="" class="img-thumbnail img-responsive img-thumbnail"></div>
+                  {% endif%}
+                  <a href="{{url_for('main.comment',post_id=item.id)}}" class="btn btn-success" style="margin-top: 15px;"><small>Comment</small></a><hr>
+                </div>
+              </div>
+            </div>
+            {% endfor%}
+          </div>
+          <div class="col-lg-2 col-md-2 col-sm-1 col-xs-1"></div>
         </div>
+        <hr>
 
         <div style="border: 1px solid rgb(243, 243, 245);width: 30%; margin-left: auto; margin-right: auto;">
             {% for page_num in posts.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
@@ -71,3 +96,4 @@ HOME
 </body>
 
 {%endblock%}
+            
