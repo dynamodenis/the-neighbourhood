@@ -23,6 +23,8 @@ bootstrap=Bootstrap()
 def create_app(config_name):
     app=Flask(__name__)
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+        #REGISTER CONFIGURASTION
+    app.config.from_object(config_options[config_name])
 
 
     #REGISTER EXTENTONS
@@ -39,8 +41,7 @@ def create_app(config_name):
     app.register_blueprint(auth_blueprint,url_prefix='/authenticate')
 
 
-    #REGISTER CONFIGURASTION
-    app.config.from_object(config_options[config_name])
+
 
     def format_date(value):
         dt = arrow.get(value).to('UTC')

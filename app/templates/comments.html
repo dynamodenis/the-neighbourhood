@@ -46,7 +46,7 @@
                             <li style="list-style-type: none;">
                                 <div class="col-md-2 col-lg-2 col-sm-2 col-xs-2">
                                     {% if comment.user.profile_pic_path %}
-                                    <img src="{{image}}" class="img-circle " style="width: 20px; height: 20px;">
+                                    <img src="{{url_for('static',filename='/profile/'+comment.user.profile_pic_path)}}" class="img-circle " style="width: 20px; height: 20px;">
                                     {%else%}
                                     <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle" alt="" style="width: 25px; height: 25px;">
                                     {% endif %}
@@ -55,7 +55,11 @@
                                         <span class="header">{{comment.user.username}}</span> <br>
                                         <span class="rounded">{{comment.comment}} </span><hr>                          
                                 </div>
-                                {% if (post.user==current_user or comment.user != current_user)%}
+                                {% if post.user==current_user%}
+                                <div class="col-md-2 col-lg-2 col-sm-2 col-xs-4">
+                                    <div><a href="{{url_for('main.delete_comment',comment_id=comment.id)}}"><p class="glyphicon glyphicon-trash"></p></a></div>
+                                </div>
+                                {% elif comment.user==current_user%}
                                 <div class="col-md-2 col-lg-2 col-sm-2 col-xs-4">
                                     <div><a href="{{url_for('main.delete_comment',comment_id=comment.id)}}"><p class="glyphicon glyphicon-trash"></p></a></div>
                                 </div>

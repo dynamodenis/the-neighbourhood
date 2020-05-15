@@ -113,17 +113,17 @@ def post(uname):
 @main.route('/<int:post_id>/comment', methods=['GET','POST'])
 @login_required
 def comment(post_id):
-    image=url_for('static',filename='profile/'+current_user.profile_pic_path)
+    
     post=Post.query.filter_by(id=post_id).first()
     comment_query=Comment.query.filter_by(post_id=post.id).all()
+    # image=url_for('static',filename='profile/'+comment.user.profile_pic_path)
     form_comment=Commentform()
     if form_comment.validate_on_submit():
         comment=Comment(comment=form_comment.comment.data,post_id=post.id,user_id=current_user.id)
         db.session.add(comment)
         db.session.commit()
         return redirect(url_for('main.comment',post_id=post.id))
-    print(image)
-    return render_template('comments.html',form=form_comment,post=post,comments=comment_query,image=image,title='Comments')
+    return render_template('comments.html',form=form_comment,post=post,comments=comment_query,title='Comments')
 
 
 #DELETE A POST
@@ -188,8 +188,6 @@ def about():
 def delete_comment(comment_id):
     comment=Comment.query.filter_by(id=comment_id).first_or_404()
     post= Post.query.filter_by(id=comment.post.id).first()
-    if post.user !=current_user or comment.user !=current_user:
-        abort(403)
 
     db.session.delete(comment)
     db.session.commit()

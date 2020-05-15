@@ -1,0 +1,7 @@
+Hello {{user.username}},
+
+Welcome to MyNeighborhood
+
+Your interest in our application has been nofied to us.
+
+Welcome to Digital Neighborhood
