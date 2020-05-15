@@ -5,8 +5,8 @@ from ..models import User
 import email_validator
 
 class RegistrationForm(FlaskForm):
-    email = StringField('Enter Email Address', validators=[Required(),Email()])
-    author = StringField('Enter authors name', validators=[Required()])
+    author = StringField('Enter Your Username', validators=[Required()])
+    email = StringField('Enter Email Address', validators=[Required(),Email()])  
     password = PasswordField('Password', validators=[Required(), EqualTo('password_confirm', message= 'passwords should match')])
     password_confirm = PasswordField('Confirm passswords', validators=[Required()])
     submit = SubmitField('Signup')

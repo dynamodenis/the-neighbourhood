@@ -112,12 +112,13 @@ def post(uname):
 #COMMENT ON A POST
 @main.route('/<int:post_id>/comment', methods=['GET','POST'])
 @login_required
-def comment(post_id):
-    
+def comment(post_id): 
     post=Post.query.filter_by(id=post_id).first()
     comment_query=Comment.query.filter_by(post_id=post.id).all()
-    # image=url_for('static',filename='profile/'+comment.user.profile_pic_path)
     form_comment=Commentform()
+    # if not user.is_authenticated:
+    #     flash('please login', 'danger')
+    #     return redirect(url_for('main.login')) 
     if form_comment.validate_on_submit():
         comment=Comment(comment=form_comment.comment.data,post_id=post.id,user_id=current_user.id)
         db.session.add(comment)
