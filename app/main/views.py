@@ -12,6 +12,12 @@ def index():
     posts = Post.query.order_by(Post.posted_date.desc()).paginate(page=page, per_page=8)
     return render_template('index.html', posts=posts,pages='index')
 
+@main.route('/test')
+def test():
+    page = request.args.get('page', 1, type=int)
+    posts = Post.query.order_by(Post.posted_date.desc()).paginate(page=page, per_page=8)
+    return render_template('test.html', posts=posts,pages='index')
+
 #USER PROFILE 
 @main.route('/user/<string:user>' ,methods=['GET','POST'])
 @login_required
@@ -22,10 +28,10 @@ def profile(user):
     post=Post.query.filter_by(user=user)\
         .order_by(Post.posted_date.desc())\
         .paginate(page=page,per_page=10)
-    return render_template('user_post.html',page='profile',image=image,user=user,posts=post,pages='profile')
+    return render_template('user_profile.html',page='profile',image=image,user=user,posts=post,pages='profile')
 
 #USER PROFILE 
-@main.route('/user/<string:user>' ,methods=['GET','POST'])
+@main.route('/<string:user>/posts' ,methods=['GET','POST'])
 @login_required
 def post_profile(user):
     image=url_for('static',filename='profile/'+current_user.profile_pic_path)
@@ -34,7 +40,7 @@ def post_profile(user):
     post=Post.query.filter_by(user=user)\
         .order_by(Post.posted_date.desc())\
         .paginate(page=page,per_page=10)
-    return render_template('user_profile.html',page='profile',image=image,user=user,posts=post,pages='profile')
+    return render_template('user_post.html',image=image,user=user,posts=post)
 
 
 
@@ -176,3 +182,16 @@ def posted(username):
 @main.route('/about')
 def about():
     return render_template('about.html',pages='about')
+
+@main.route('/delete/comment/<int:comment_id>', methods=['GET','POST'])
+@login_required
+def delete_comment(comment_id):
+    comment=Comment.query.filter_by(id=comment_id).first_or_404()
+    post= Post.query.filter_by(id=comment.post.id).first()
+    if post.user !=current_user or comment.user !=current_user:
+        abort(403)
+
+    db.session.delete(comment)
+    db.session.commit()
+    flash('Blog deleted!')
+    return redirect(url_for('main.comment',post_id=post.id))

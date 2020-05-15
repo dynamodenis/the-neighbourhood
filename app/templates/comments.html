@@ -9,36 +9,37 @@
 {% endblock%}
 {% block content%}
 <div class="row">
-    <div class="col-md-1 col-lg-1 col-xs-1"></div>
-    <div class="col-md-10 col-lg-10 col-xs-10">
-        <div class="card mb-6">
-            <div class="card-body" style="margin-top: 20px;">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                    {% if post.user.profile_pic_path %}
-                    <img src="{{image}}" class=" img-circle img-responsive " style="width: 45px; height: 45px;">
-                    {%else%}
-                    <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle" alt="" style="width: 45px; height: 45px;">
-                    {% endif %}
-                </div>
-                  <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                    <div class="card-title">
-                      <div class="card-title" style="font-weight: bolder;"><a href="{{url_for('main.post_profile', user=post.user.username)}}" style="text-decoration: none;">{{post.user.username}} </a> Posted: {{post.posted_date | timeago }}</div>
-                    </div>
-                    <p class="card-text">{{post.post}}</p>
+    <div class="col-md-2 col-lg-2 col-xs-1"></div>
+    <div class="col-md-8 col-lg-8 col-xs-10">
+        
+            <article class="media content-section card" style="align-items: center; margin-top: 15px;">
+                {% if post.user.profile_pic_path %}
+                <div class="article-metadata" style="position: absolute; margin-left: 60px; margin-top: 10px;">
+                    <a class='mr-2' href="{{url_for('main.post_profile',user=post.user.username)}}" style="font-size: 1.3em; font-weight: bolder; text-decoration: none; color: black;">{{post.user.username}}</a>
+                    <small class="text-muted">{{post.posted_date | timeago}}</small>
+               </div>
+                <img src="{{url_for('static',filename='/profile/'+post.user.profile_pic_path)}}" class="img-circle article-img img-responsive" style="width: 45px; height: 45px; position: relative;">
+                {%else%}
+                <img src="{{url_for('static', filename='profile/profile.png')}}" class="card-img rounded-circle article-img" alt="" style="width: 45px; height: 45px;position: relative;">
+                {% endif %}
+                <div class="media-body" >
+                    
+                    <h5 style="margin-left: 60px;"><a href="{{url_for('main.comment',post_id=post.id)}}" style="font-size: 1.1em; text-decoration: none; font-weight:bold;  color: black;">{{post.title}}</a></h5>
+                    <p class="article-content" style="margin-left: 60px;">{{post.post}}</p>
                     {% if post.picture%}
-                        <div><img src="{{url_for('static',filename='/images/'+post.picture)}}" alt="" class="img-thumbnail img-responsive img-thumbnail"></div>
-                    {% endif%}                
-                    <p style="margin-top: 10px;">
+                      <div style="margin-left: 60px;"><img src="{{url_for('static',filename='/images/'+post.picture)}}" alt="" class="img-thumbnail img-responsive img-thumbnail"></div>
+                    {% endif%}
+                    <p style="margin-top: 10px; margin-left: 60px">
                         <class class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="link" aria-expanded="false" aria-controls="collapseExample">
-                        Comment 
+                        <small>Comment </small> 
                         </class>
                     </p>
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse" id="collapseExample" style="margin-left: 60px;">
                         <div class="card card-body form-inline">
                             {{wtf.quick_form(form)}}
                         </div>
                     </div> 
-                    <div class=" card comments">
+                    <div class=" card comments" style="margin-left: 60px;">
                         <h4 class="card-header">View all post comments</h4>
                         <ul>
                             {% for comment in comments%}
@@ -54,20 +55,18 @@
                                         <span class="header">{{comment.user.username}}</span> <br>
                                         <span class="rounded">{{comment.comment}} </span><hr>                          
                                 </div>
-                                <br>
-                                <!-- {% if post.user==current_user%}
+                                {% if (post.user==current_user or comment.user != current_user)%}
                                 <div class="col-md-2 col-lg-2 col-sm-2 col-xs-4">
+                                    <div><a href="{{url_for('main.delete_comment',comment_id=comment.id)}}"><p class="glyphicon glyphicon-trash"></p></a></div>
                                 </div>
-                                {% endif %} -->
+                                {% endif %}               
                             </li>
-                            <br>
                             {% endfor%}
                         </ul>
                     </div>   
-                </div>   
-            </div>     
-        </div>
+                </div>
+            </article><hr>
     </div>
-    <div class="col-md-1 col-lg-1 col-xs-1"></div>
+    <div class="col-md-2 col-lg-2 col-xs-1"></div>
 </div>
 {% endblock %}

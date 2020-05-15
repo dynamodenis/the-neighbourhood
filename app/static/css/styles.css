@@ -4,9 +4,17 @@ body{
 .comment{
     padding-top: 20px;
 }
-.index_title{
+/* .index_title{
     font-weight: bolder;
 }
 .name{
     text-decoration: none;
 }
+
+.article-img{
+    position: relative;
+}
+.article-metadata{
+    position: absolute;
+    margin-top: 400px;
+} */
